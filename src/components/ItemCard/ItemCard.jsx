@@ -1,14 +1,17 @@
+import "./ItemCard.css";
+
 function ItemCard({ item, onClick }) {
   return (
-    <div className="item-card">
-      <h2>{item.name}</h2>
+    <li className="item-card">
+      <h2 className="card__name">{item.name}</h2>
       <img
+        className="card__image"
         src={item.link}
         alt={item.name}
         onClick={() => onClick(item)}
         style={{ cursor: "pointer" }}
       />
-    </div>
+    </li>
   );
 }
 
