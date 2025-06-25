@@ -2,6 +2,7 @@ import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState } from "react";
 
 // Mock weather data — in a future step, you'll use useEffect to fetch this from an API
@@ -35,6 +36,7 @@ function App() {
         )}
         <Footer />
       </div>
+      <ModalWithForm />
     </div>
   );
 }
