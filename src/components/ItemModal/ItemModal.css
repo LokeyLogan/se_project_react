@@ -1,0 +1,25 @@
+.modal {
+  position: absolute;
+}
+
+.modal__image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.modal__close-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+}

@@ -6,3 +6,11 @@
   list-style-type: none;
   gap: 12px;
 }
+
+.cards__text {
+  font-family: "Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  color: #000;
+}
