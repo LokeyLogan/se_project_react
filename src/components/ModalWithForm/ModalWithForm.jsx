@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import "./ModalWithForm.css";
+import closeIcon from "../../assets/Dark_Close-btn.svg";
 
 function ModalWithForm({
   children,
@@ -34,16 +35,16 @@ function ModalWithForm({
 
   return isOpen ? (
     <div className="modal modal__opened" onClick={handleOverlayClick}>
-      <div className="modal__content">
+      <div className="modal__content modal__content-Garment">
         <h2 className="modal__title">{title}</h2>
         <button
           onClick={handleCloseClick}
           type="button"
           className="modal__close"
         >
-          CLOSE
+          <img src={closeIcon} alt="Close" className="modal__close-icon" />
         </button>
-        <form className="modal__form">
+        <form className="modal__form modal__form-garment">
           {children}
           <button type="submit" className="modal__submit">
             {buttonText}

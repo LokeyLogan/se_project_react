@@ -6,6 +6,10 @@
   max-width: 100%;
   height: auto;
   display: block;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .modal__close-icon {
@@ -22,4 +26,22 @@
   position: absolute;
   top: 24px;
   right: 24px;
+}
+
+.modal__caption {
+  font-family: "Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.modal__footer {
+  font-family: "Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin-top: 32px;
+  margin-left: 32px;
 }

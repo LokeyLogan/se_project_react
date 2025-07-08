@@ -22,4 +22,5 @@
   width: 100%;
   border-radius: 16px;
   background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }

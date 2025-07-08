@@ -7,3 +7,45 @@
   margin: 0 auto;
   padding: 0 20px;
 }
+
+.modal__label {
+  margin: 0;
+  font-family: "Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 1);
+  padding: 0 28px 24px;
+}
+
+.modal__label_type_radio {
+  margin: 0;
+  padding: 8px 28px 0;
+}
+
+.modal__legend {
+  font-family: "Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  margin: 0;
+  padding: 10px 0 4px 28px;
+}
+
+.modal__input {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: transparent;
+  outline: none;
+  padding: 8px 0;
+  width: 100%;
+  font-family: "Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 1);
+  box-sizing: border-box;
+}
+
+.modal__input:focus {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+}
