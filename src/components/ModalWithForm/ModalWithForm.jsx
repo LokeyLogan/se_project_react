@@ -34,17 +34,21 @@ function ModalWithForm({
   };
 
   return isOpen ? (
-    <div className="modal modal__opened" onClick={handleOverlayClick}>
-      <div className="modal__content modal__content-Garment">
+    <div className="modal modal_opened" onClick={handleOverlayClick}>
+      <div className="modal__content modal__content_type_form">
         <h2 className="modal__title">{title}</h2>
         <button
           onClick={handleCloseClick}
           type="button"
           className="modal__close"
         >
-          <img src={closeIcon} alt="Close" className="modal__close-icon" />
+          <img
+            src={closeIcon}
+            alt="Close modal"
+            className="modal__close-icon"
+          />
         </button>
-        <form className="modal__form modal__form-garment">
+        <form className="modal__form modal__form_type_layout">
           {children}
           <button type="submit" className="modal__submit">
             {buttonText}

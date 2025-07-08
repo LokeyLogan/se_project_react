@@ -30,14 +30,18 @@ function ItemModal({ activeModal, handleCloseClick, card }) {
   };
 
   return isOpen ? (
-    <div className="modal modal__opened" onClick={handleOverlayClick}>
+    <div className="modal modal_opened" onClick={handleOverlayClick}>
       <div className="modal__content modal__content_type_image">
         <button
           onClick={handleCloseClick}
           type="button"
           className="modal__close"
         >
-          <img src={closeIcon} alt="" className="modal__close-icon" />
+          <img
+            src={closeIcon}
+            alt="Close modal"
+            className="modal__close-icon"
+          />
         </button>
         <img src={card.link} alt={card.name} className="modal__image" />
         <div className="modal__footer">

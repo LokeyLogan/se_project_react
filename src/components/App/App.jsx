@@ -31,6 +31,23 @@ function App() {
     setItemModalCard(null);
   };
 
+  // Escape key listener to close modal
+  useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
+
   // Helper to map temperature to "hot", "warm", "cold"
   const mapWeatherToType = (temp) => {
     if (temp >= 80) return "hot";
