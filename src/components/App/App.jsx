@@ -4,14 +4,15 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
-import { getWeather } from "../../utils/weatherApi";
+import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, APIkey } from "../../utils/constants";
 import { useEffect, useState } from "react";
 import currentTemperatureUnitContext from "../../contexts/currentTemperatureUnitContext";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
-    temp: 75,
+    tempF: 75,
+    tempC: 24,
     type: "warm",
     location: "Tampa",
   });
@@ -20,11 +21,7 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
   const handleToggleSwitchChange = () => {
-    if (currentTemperatureUnit === "F") {
-      setCurrentTemperatureUnit("C");
-    } else {
-      setCurrentTemperatureUnit("F");
-    }
+    setCurrentTemperatureUnit((prev) => (prev === "F" ? "C" : "F"));
   };
 
   const handleAddClick = () => {
@@ -58,23 +55,12 @@ function App() {
     };
   }, [activeModal]);
 
-  // Helper to map temperature to "hot", "warm", "cold"
-  const mapWeatherToType = (temp) => {
-    if (temp >= 80) return "hot";
-    if (temp >= 60) return "warm";
-    return "cold";
-  };
-
+  // Fetch weather
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((res) => {
-        const temperature = Math.round(res.main.temp);
-        const weatherType = mapWeatherToType(temperature);
-        setWeatherData({
-          temp: temperature,
-          type: weatherType,
-          location: res.name,
-        });
+        const filteredData = filterWeatherData(res);
+        setWeatherData(filteredData);
       })
       .catch(console.error);
   }, []);
