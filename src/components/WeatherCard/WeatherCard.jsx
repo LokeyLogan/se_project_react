@@ -1,11 +1,10 @@
-import sunny from "../../assets/sunny.svg";
 import "./WeatherCard.css";
+import sunny from "../../assets/sunny.svg";
 import { useContext } from "react";
-import currentTemperatureUnitContext from "../../contexts/currentTemperatureUnitContext";
+import CurrentTemperatureUnitContext from "../../contexts/currentTemperatureUnitContext";
 
 function WeatherCard({ tempF, tempC, weatherType }) {
-  console.log("WeatherCard props:", { tempF, tempC, weatherType });
-  const { currentTemperatureUnit } = useContext(currentTemperatureUnitContext);
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   const displayedTemp =
     currentTemperatureUnit === "F" ? `${tempF}°F` : `${tempC}°C`;

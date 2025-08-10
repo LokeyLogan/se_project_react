@@ -2,26 +2,19 @@ export const getWeather = ({ latitude, longitude }, APIkey) => {
   return fetch(
     `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`
   ).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Error: ${res.status}`);
-    }
+    if (res.ok) return res.json();
+    return Promise.reject(`Error: ${res.status}`);
   });
 };
 
-const getWeatherType = (temperature) => {
-  if (temperature >= 30) {
-    return "hot";
-  } else if (temperature >= 19 && temperature < 30) {
-    return "warm";
-  } else {
-    return "cold";
-  }
+const getWeatherType = (temperatureC) => {
+  if (temperatureC >= 30) return "hot";
+  if (temperatureC >= 19 && temperatureC < 30) return "warm";
+  return "cold";
 };
 
 const isDay = ({ sunrise, sunset }) => {
-  const now = Math.floor(Date.now() / 1000); // current time in seconds
+  const now = Math.floor(Date.now() / 1000);
   return now >= sunrise && now < sunset;
 };
 
