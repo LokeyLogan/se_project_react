@@ -2,14 +2,18 @@ import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { coordinates, APIkey } from "../../utils/constants";
+import {
+  coordinates,
+  APIkey,
+  defaultClothingItems,
+} from "../../utils/constants"; // <-- add defaultClothingItems here
 import { useEffect, useState } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/currentTemperatureUnitContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profile from "../Profile/Profile";
+import AddItemModal from "../AddItemModal/AddItemModal";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -18,6 +22,8 @@ function App() {
     type: "warm",
     location: "Tampa",
   });
+
+  const [clothingItems, setClothingItems] = useState(defaultClothingItems); // now defined
   const [activeModal, setActiveModal] = useState("");
   const [itemModalCard, setItemModalCard] = useState(null);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -26,9 +32,7 @@ function App() {
     setCurrentTemperatureUnit((prev) => (prev === "F" ? "C" : "F"));
   };
 
-  const handleAddClick = () => {
-    setActiveModal("add-garment");
-  };
+  const handleAddClick = () => setActiveModal("add-garment");
 
   const handleItemModalClick = (card) => {
     setItemModalCard(card);
@@ -40,7 +44,6 @@ function App() {
     setItemModalCard(null);
   };
 
-  // Close modal on Escape
   useEffect(() => {
     if (!activeModal) return;
     const handleEscClose = (e) => e.key === "Escape" && closeActiveModal();
@@ -48,7 +51,6 @@ function App() {
     return () => document.removeEventListener("keydown", handleEscClose);
   }, [activeModal]);
 
-  // Fetch weather once on mount
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((res) => setWeatherData(filterWeatherData(res)))
@@ -71,6 +73,7 @@ function App() {
                   <Main
                     weatherData={weatherData}
                     onItemClick={handleItemModalClick}
+                    clothingItems={clothingItems}
                   />
                 }
               />
@@ -81,84 +84,10 @@ function App() {
           </div>
 
           {activeModal === "add-garment" && (
-            <ModalWithForm
-              title="New garment"
-              buttonText="Add garment"
+            <AddItemModal
               activeModal={activeModal}
-              handleCloseClick={closeActiveModal}
-            >
-              <label htmlFor="name" className="modal__label">
-                Name
-                <input
-                  type="text"
-                  className="modal__input"
-                  id="name"
-                  name="name"
-                  placeholder="Name"
-                  required
-                />
-              </label>
-
-              <label htmlFor="imageUrl" className="modal__label">
-                Image
-                <input
-                  type="url"
-                  className="modal__input"
-                  id="imageUrl"
-                  name="imageUrl"
-                  placeholder="Image URL"
-                  required
-                />
-              </label>
-
-              <fieldset className="modal__radio-buttons">
-                <legend className="modal__legend">
-                  Select the weather type:
-                </legend>
-
-                <label
-                  htmlFor="hot"
-                  className="modal__label modal__label_type_radio"
-                >
-                  <input
-                    id="hot"
-                    name="weather"
-                    type="radio"
-                    value="hot"
-                    className="modal__radio-input"
-                  />
-                  Hot
-                </label>
-
-                <label
-                  htmlFor="warm"
-                  className="modal__label modal__label_type_radio"
-                >
-                  <input
-                    id="warm"
-                    name="weather"
-                    type="radio"
-                    value="warm"
-                    className="modal__radio-input"
-                  />
-                  Warm
-                </label>
-
-                <label
-                  htmlFor="cold"
-                  className="modal__label modal__label_type_radio"
-                >
-                  <input
-                    id="cold"
-                    name="weather"
-                    type="radio"
-                    value="cold"
-                    className="modal__radio-input"
-                  />
-                  Cold
-                </label>
-              </fieldset>
-            </ModalWithForm>
+              closeActiveModal={closeActiveModal}
+            />
           )}
 
           {activeModal === "preview" && itemModalCard && (
