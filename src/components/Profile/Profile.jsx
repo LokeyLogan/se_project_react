@@ -1,24 +1,23 @@
+// Profile.jsx
 import "./Profile.css";
+import avatar from "../../assets/avatar.svg";
 
 function SideBar() {
   return (
     <aside className="profile__sidebar">
-      <img
-        className="profile__avatar"
-        src="/assets/avatar.svg"
-        alt="User avatar"
-      />
+      <img className="profile__avatar" src={avatar} alt="User avatar" />
       <p className="profile__username">Terrence Tegegne</p>
     </aside>
   );
 }
 
-function ClothesSection({ items = [] }) {
+function ClothesSection({ items = [], onAddClick }) {
   return (
     <section className="profile__clothes">
       <div className="profile__clothes-header">
         <h2>My Items</h2>
-        <button type="button" className="profile__add-btn">
+        {/* FIX: wire button to open AddItemModal */}
+        <button type="button" className="profile__add-btn" onClick={onAddClick}>
           + Add Item
         </button>
       </div>
@@ -33,11 +32,11 @@ function ClothesSection({ items = [] }) {
   );
 }
 
-export default function Profile({ items = [] }) {
+export default function Profile({ items = [], onAddClick }) {
   return (
     <div className="profile">
       <SideBar />
-      <ClothesSection items={items} />
+      <ClothesSection items={items} onAddClick={onAddClick} />
     </div>
   );
 }

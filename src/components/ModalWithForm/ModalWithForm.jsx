@@ -8,6 +8,7 @@ function ModalWithForm({
   title,
   activeModal,
   handleCloseClick,
+  onSubmit,
 }) {
   const isOpen = activeModal === "add-garment";
 
@@ -48,7 +49,10 @@ function ModalWithForm({
             className="modal__close-icon"
           />
         </button>
-        <form className="modal__form modal__form_type_layout">
+        <form
+          onSubmit={onSubmit}
+          className="modal__form modal__form_type_layout"
+        >
           {children}
           <button type="submit" className="modal__submit">
             {buttonText}

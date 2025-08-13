@@ -1,41 +1,27 @@
-import { useEffect } from "react";
+// ItemModal.jsx  (replace your current file with this)
 import "./ItemModal.css";
-import closeIcon from "../../assets/Modal_Close.svg";
+import closeIcon from "../../assets/Dark_Close-btn.svg";
 
-function ItemModal({ activeModal, handleCloseClick, card }) {
+export default function ItemModal({
+  activeModal,
+  card,
+  handleCloseClick,
+  onDelete,
+}) {
   const isOpen = activeModal === "preview";
+  if (!isOpen || !card) return null;
 
-  // ESC key close
-  useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === "Escape") {
-        handleCloseClick();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("keydown", handleEsc);
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleEsc);
-    };
-  }, [isOpen, handleCloseClick]);
-
-  // Overlay click close
   const handleOverlayClick = (e) => {
-    if (e.target.classList.contains("modal")) {
-      handleCloseClick();
-    }
+    if (e.target.classList.contains("modal")) handleCloseClick();
   };
 
-  return isOpen ? (
+  return (
     <div className="modal modal_opened" onClick={handleOverlayClick}>
-      <div className="modal__content modal__content_type_image">
+      <div className="modal__content">
         <button
-          onClick={handleCloseClick}
           type="button"
           className="modal__close"
+          onClick={handleCloseClick}
         >
           <img
             src={closeIcon}
@@ -43,14 +29,22 @@ function ItemModal({ activeModal, handleCloseClick, card }) {
             className="modal__close-icon"
           />
         </button>
+
         <img src={card.link} alt={card.name} className="modal__image" />
-        <div className="modal__footer">
-          <h2 className="modal__caption">{card.name}</h2>
-          <p className="modal__weather">Weather: {card.weather}</p>
+        <div className="modal__caption">
+          <h2 className="modal__title">{card.name}</h2>
+          <p className="modal__subtitle">Weather: {card.weather}</p>
         </div>
+
+        {/* REQUIRED: delete button (immediate removal) */}
+        <button
+          type="button"
+          className="modal__delete"
+          onClick={() => onDelete(card)}
+        >
+          Delete
+        </button>
       </div>
     </div>
-  ) : null;
+  );
 }
-
-export default ItemModal;

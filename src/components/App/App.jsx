@@ -1,3 +1,4 @@
+// App.jsx  (replace your current file with this)
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -8,7 +9,7 @@ import {
   coordinates,
   APIkey,
   defaultClothingItems,
-} from "../../utils/constants"; // <-- add defaultClothingItems here
+} from "../../utils/constants";
 import { useEffect, useState } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/currentTemperatureUnitContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -23,7 +24,7 @@ function App() {
     location: "Tampa",
   });
 
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems); // now defined
+  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
   const [activeModal, setActiveModal] = useState("");
   const [itemModalCard, setItemModalCard] = useState(null);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -42,6 +43,23 @@ function App() {
   const closeActiveModal = () => {
     setActiveModal("");
     setItemModalCard(null);
+  };
+
+  const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
+    const newItem = {
+      _id: Date.now().toString(),
+      name,
+      link: imageUrl,
+      weather,
+    };
+    setClothingItems([newItem, ...clothingItems]);
+    closeActiveModal();
+  };
+
+  // REQUIRED: delete handler (immediate removal)
+  const handleDeleteCard = (item) => {
+    setClothingItems((prev) => prev.filter((it) => it._id !== item._id));
+    closeActiveModal();
   };
 
   useEffect(() => {
@@ -77,7 +95,12 @@ function App() {
                   />
                 }
               />
-              <Route path="/profile" element={<Profile items={[]} />} />
+              <Route
+                path="/profile"
+                element={
+                  <Profile items={clothingItems} onAddClick={handleAddClick} />
+                }
+              />
             </Routes>
 
             <Footer />
@@ -87,6 +110,7 @@ function App() {
             <AddItemModal
               activeModal={activeModal}
               closeActiveModal={closeActiveModal}
+              onAddItemModalSubmit={handleAddItemModalSubmit}
             />
           )}
 
@@ -95,6 +119,7 @@ function App() {
               activeModal={activeModal}
               card={itemModalCard}
               handleCloseClick={closeActiveModal}
+              onDelete={handleDeleteCard} // <-- pass delete handler
             />
           )}
         </div>
