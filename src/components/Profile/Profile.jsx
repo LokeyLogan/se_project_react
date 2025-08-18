@@ -24,7 +24,12 @@ function ClothesSection({ items = [], onAddClick }) {
       <ul className="profile__list">
         {items.map((it) => (
           <li key={it._id} className="profile__card">
-            {it.name}
+            <p className="profile__card-name">{it.name}</p>
+            <img
+              src={it.link} // <-- was it.imageUrl
+              alt={it.name}
+              className="profile__card-image"
+            />
           </li>
         ))}
       </ul>

@@ -24,17 +24,43 @@
 
 .profile__clothes-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between; /* pushes button to the right */
+  align-items: center; /* vertical alignment */
 }
 
 .profile__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 20px; /* space between cards */
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .profile__card {
   border: 1px solid #ddd;
   padding: 10px;
-  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.profile__card-image {
+  width: 100%;
+  height: auto;
+  max-width: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.profile__card-name {
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.profile__add-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }

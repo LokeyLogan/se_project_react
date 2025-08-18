@@ -37,6 +37,10 @@
   margin-bottom: 12px;
 }
 
+.modal__subtitle {
+  padding-left: 28px;
+}
+
 .modal__footer {
   font-family: "Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
@@ -44,4 +48,24 @@
   line-height: 24px;
   margin-top: 32px;
   margin-left: 32px;
+}
+
+/* New: make modal content flex so delete button can align right */
+.modal__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__delete {
+  position: relative;
+  align-self: flex-end;
+  margin: 16px 32px 32px 0; /* top right bottom left */
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: #ff4d00;
+  max-width: 98.12px;
+  height: 13.62px;
+  bottom: 137px;
 }
