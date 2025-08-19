@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "T-shirt",
+      "weather": "warm",
+      "link": "https://via.placeholder.com/300x200?text=T-shirt"
+    },
+    {
+      "id": 2,
+      "name": "Jacket",
+      "weather": "cold",
+      "link": "https://via.placeholder.com/300x200?text=Jacket"
+    },
+    {
+      "id": 3,
+      "name": "Cap",
+      "weather": "hot",
+      "link": "https://via.placeholder.com/300x200?text=Cap"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Terrence Tegegne",
+      "avatar": "/assets/avatar.svg"
+    }
+  ]
+}

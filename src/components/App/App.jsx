@@ -1,4 +1,4 @@
-// App.jsx  (replace your current file with this)
+// App.jsx
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -56,7 +56,7 @@ function App() {
     closeActiveModal();
   };
 
-  // REQUIRED: delete handler (immediate removal)
+  // delete handler (immediate removal)
   const handleDeleteCard = (item) => {
     setClothingItems((prev) => prev.filter((it) => it._id !== item._id));
     closeActiveModal();
@@ -98,7 +98,11 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                  <Profile items={clothingItems} onAddClick={handleAddClick} />
+                  <Profile
+                    items={clothingItems}
+                    onAddClick={handleAddClick}
+                    onItemClick={handleItemModalClick} // ← added so profile cards open the same modal
+                  />
                 }
               />
             </Routes>
@@ -119,7 +123,7 @@ function App() {
               activeModal={activeModal}
               card={itemModalCard}
               handleCloseClick={closeActiveModal}
-              onDelete={handleDeleteCard} // <-- pass delete handler
+              onDelete={handleDeleteCard}
             />
           )}
         </div>
