@@ -1,4 +1,5 @@
 import React from "react";
+import "./ClothesSection.css";
 
 const ClothesSection = ({ items = [], onAddClick, onItemClick }) => {
   return (
