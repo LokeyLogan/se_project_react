@@ -1,21 +1,26 @@
 .profile {
   display: flex;
-  gap: 20px;
-  padding: 20px;
+  gap: 116px;
+  align-items: flex-start; /* keeps sidebar at the top */
 }
 
 .profile__sidebar {
-  width: 200px;
+  display: flex;
+  align-items: center; /* vertically centers avatar and username */
+  gap: 16px; /* space between avatar and username */
 }
 
 .profile__avatar {
-  width: 100px;
+  max-width: 56px;
+  width: 100%;
   border-radius: 50%;
 }
 
 .profile__username {
-  font-weight: bold;
-  margin-top: 10px;
+  font-family: "Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .profile__clothes {
@@ -24,7 +29,7 @@
 
 .profile__clothes-header {
   display: flex;
-  justify-content: space-between; /* pushes button to the right */
+  justify-content: flex-start; /* pushes button to the right */
   align-items: center; /* vertical alignment */
 }
 
@@ -33,7 +38,7 @@
   grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
   gap: 20px; /* space between cards */
   list-style: none;
-  padding: 0;
+  padding: 0 40px 0 0;
   margin: 0;
 }
 
@@ -58,9 +63,11 @@
 }
 
 .profile__add-btn {
+  color: rgba(0, 0, 0, 0.6);
   background: none;
   border: none;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+  padding-left: 20px;
 }

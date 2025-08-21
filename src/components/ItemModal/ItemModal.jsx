@@ -42,7 +42,7 @@ export default function ItemModal({
           className="modal__delete"
           onClick={() => onDelete(card)}
         >
-          Delete
+          Delete Item
         </button>
       </div>
     </div>

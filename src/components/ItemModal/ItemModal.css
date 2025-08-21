@@ -57,6 +57,7 @@
 }
 
 .modal__delete {
+  font-family: "Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
   align-self: flex-end;
   margin: 16px 32px 32px 0; /* top right bottom left */
