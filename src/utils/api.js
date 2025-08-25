@@ -1,6 +1,7 @@
 const baseUrl = "http://localhost:3001";
 
-const handle = (res) =>
+// Exported so other files (like weatherApi.js) can reuse it
+export const handle = (res) =>
   res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
 
 const normalize = (item) => ({
@@ -29,6 +30,8 @@ export function addItem({ name, imageUrl, weather }) {
 
 // DELETE /items/:id
 export function deleteItem(idOrUnderscoreId) {
+  // DELETE often returns 204 (no JSON body),
+  // so keep this simple check instead of using `handle`
   return fetch(`${baseUrl}/items/${idOrUnderscoreId}`, {
     method: "DELETE",
   }).then((res) =>

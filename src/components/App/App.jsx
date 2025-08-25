@@ -1,4 +1,3 @@
-// src/components/App/App.jsx
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -11,7 +10,7 @@ import {
   defaultClothingItems,
 } from "../../utils/constants";
 import { useEffect, useState } from "react";
-import CurrentTemperatureUnitContext from "../../contexts/currentTemperatureUnitContext";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import AddItemModal from "../AddItemModal/AddItemModal";

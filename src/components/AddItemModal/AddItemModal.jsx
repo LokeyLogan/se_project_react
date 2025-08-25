@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
@@ -10,19 +10,44 @@ export default function AddItemModal({
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [weather, setWeather] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  // Clear the form when the modal closes (or on first open if needed)
+  useEffect(() => {
+    if (!activeModal) {
+      setName("");
+      setImageUrl("");
+      setWeather("");
+      setIsSubmitting(false);
+    }
+  }, [activeModal]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onAddItemModalSubmit({ name, imageUrl, weather });
-    setName("");
-    setImageUrl("");
-    setWeather("");
+    if (isSubmitting) return;
+
+    try {
+      setIsSubmitting(true);
+      // If onAddItemModalSubmit returns a promise, we await it to confirm success
+      await Promise.resolve(onAddItemModalSubmit({ name, imageUrl, weather }));
+      // Clear only after success
+      setName("");
+      setImageUrl("");
+      setWeather("");
+      // Optionally close modal after success
+      if (closeActiveModal) closeActiveModal();
+    } catch (err) {
+      // Keep user input on error so they can adjust and resubmit
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <ModalWithForm
       title="New garment"
-      buttonText="Add garment"
+      buttonText={isSubmitting ? "Adding..." : "Add garment"}
       activeModal={activeModal}
       handleCloseClick={closeActiveModal}
       onSubmit={handleSubmit}
@@ -38,6 +63,7 @@ export default function AddItemModal({
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
+          disabled={isSubmitting}
         />
       </label>
 
@@ -52,10 +78,11 @@ export default function AddItemModal({
           required
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
+          disabled={isSubmitting}
         />
       </label>
 
-      <fieldset className="modal__radio-buttons">
+      <fieldset className="modal__radio-buttons" disabled={isSubmitting}>
         <legend className="modal__legend">Select the weather type:</legend>
 
         <label htmlFor="hot" className="modal__label modal__label_type_radio">
