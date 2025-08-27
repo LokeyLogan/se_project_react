@@ -28,17 +28,12 @@ export default function AddItemModal({
 
     try {
       setIsSubmitting(true);
-      // If onAddItemModalSubmit returns a promise, we await it to confirm success
-      await Promise.resolve(onAddItemModalSubmit({ name, imageUrl, weather }));
-      // Clear only after success
-      setName("");
-      setImageUrl("");
-      setWeather("");
-      // Optionally close modal after success
+      await onAddItemModalSubmit({ name, imageUrl, weather });
+      // Modal close will trigger useEffect to reset the form
       if (closeActiveModal) closeActiveModal();
     } catch (err) {
-      // Keep user input on error so they can adjust and resubmit
       console.error(err);
+      // Keep user input on error so they can adjust and resubmit
     } finally {
       setIsSubmitting(false);
     }
