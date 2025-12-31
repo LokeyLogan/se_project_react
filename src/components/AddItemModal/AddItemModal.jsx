@@ -44,6 +44,7 @@ export default function AddItemModal({
       title="New garment"
       buttonText={isSubmitting ? "Adding..." : "Add garment"}
       activeModal={activeModal}
+      modalName="add-garment"
       handleCloseClick={closeActiveModal}
       onSubmit={handleSubmit}
     >

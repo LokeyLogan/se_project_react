@@ -7,10 +7,11 @@ function ModalWithForm({
   buttonText,
   title,
   activeModal,
+  modalName,
   handleCloseClick,
   onSubmit,
 }) {
-  const isOpen = activeModal === "add-garment";
+  const isOpen = activeModal === modalName;
 
   useEffect(() => {
     const handleEsc = (e) => {

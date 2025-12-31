@@ -4,7 +4,13 @@ import ItemCard from "../ItemCard/ItemCard";
 import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
-function Main({ weatherData, onItemClick, clothingItems }) {
+function Main({
+  weatherData,
+  onItemClick,
+  clothingItems,
+  onCardLike,
+  isLoggedIn,
+}) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   return (
@@ -14,6 +20,7 @@ function Main({ weatherData, onItemClick, clothingItems }) {
         tempC={weatherData.tempC}
         weatherType={weatherData.type}
       />
+
       <section className="cards">
         <p className="cards__text">
           Today is{" "}
@@ -22,11 +29,18 @@ function Main({ weatherData, onItemClick, clothingItems }) {
             : `${weatherData.tempC}°C`}{" "}
           / You may want to wear:
         </p>
+
         <ul className="cards__list">
           {clothingItems
             .filter((item) => item.weather === weatherData.type)
             .map((item) => (
-              <ItemCard key={item._id} item={item} onClick={onItemClick} />
+              <ItemCard
+                key={item._id}
+                item={item}
+                onClick={onItemClick}
+                onCardLike={onCardLike}
+                isLoggedIn={isLoggedIn}
+              />
             ))}
         </ul>
       </section>

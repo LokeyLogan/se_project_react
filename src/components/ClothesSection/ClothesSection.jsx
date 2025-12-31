@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./ClothesSection.css";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 const ClothesSection = ({ items = [], onAddClick, onItemClick }) => {
+  const currentUser = useContext(CurrentUserContext);
+
+  const myItems = currentUser?._id
+    ? items.filter((it) => it.owner === currentUser._id)
+    : [];
+
   return (
     <section className="profile__clothes">
       <div className="profile__clothes-header">
@@ -12,7 +19,7 @@ const ClothesSection = ({ items = [], onAddClick, onItemClick }) => {
       </div>
 
       <ul className="profile__list">
-        {items.map((it) => (
+        {myItems.map((it) => (
           <li
             key={it._id}
             className="profile__card"
@@ -27,7 +34,6 @@ const ClothesSection = ({ items = [], onAddClick, onItemClick }) => {
             style={{ cursor: "pointer" }}
           >
             <p className="profile__card-name">{it.name}</p>
-            {/* Your data shape uses `link` for the image URL (matches your CSS). */}
             <img src={it.link} alt={it.name} className="profile__card-image" />
           </li>
         ))}

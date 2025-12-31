@@ -1,14 +1,26 @@
 import "./Header.css";
 import logo from "../../assets/logo.svg";
-import avatar from "../../assets/avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function Header({ handleAddClick, weatherData }) {
+function Header({
+  handleAddClick,
+  weatherData,
+  isLoggedIn,
+  onLoginClick,
+  onRegisterClick,
+}) {
+  const currentUser = useContext(CurrentUserContext);
+
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
+
+  const firstLetter = currentUser?.name?.[0]?.toUpperCase() || "U";
+  const hasAvatar = Boolean(currentUser?.avatar);
 
   return (
     <header className="header">
@@ -22,19 +34,64 @@ function Header({ handleAddClick, weatherData }) {
 
       <div className="header__actions">
         <ToggleSwitch />
-        <button
-          onClick={handleAddClick}
-          type="button"
-          className="header__add-clothes-btn"
-        >
-          + Add Clothes
-        </button>
+
+        {isLoggedIn && (
+          <button
+            onClick={handleAddClick}
+            type="button"
+            className="header__add-clothes-btn"
+          >
+            + Add Clothes
+          </button>
+        )}
+
+        {!isLoggedIn && (
+          <>
+            <button
+              type="button"
+              className="header__add-clothes-btn"
+              onClick={onRegisterClick}
+            >
+              Sign up
+            </button>
+            <button
+              type="button"
+              className="header__add-clothes-btn"
+              onClick={onLoginClick}
+            >
+              Log in
+            </button>
+          </>
+        )}
       </div>
 
-      <Link to="/profile" className="header__user-container">
-        <p className="header__username">Terrence Tegegne</p>
-        <img src={avatar} alt="Terrence" className="header__avatar" />
-      </Link>
+      {isLoggedIn && (
+        <Link to="/profile" className="header__user-container">
+          <p className="header__username">{currentUser?.name || "User"}</p>
+
+          {hasAvatar ? (
+            <img
+              src={currentUser.avatar}
+              alt={currentUser?.name || "User"}
+              className="header__avatar"
+            />
+          ) : (
+            <div
+              className="header__avatar"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "50%",
+                fontWeight: 700,
+              }}
+              aria-label="User avatar placeholder"
+            >
+              {firstLetter}
+            </div>
+          )}
+        </Link>
+      )}
     </header>
   );
 }

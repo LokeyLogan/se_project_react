@@ -1,6 +1,7 @@
-// ItemModal.jsx  (replace your current file with this)
 import "./ItemModal.css";
 import closeIcon from "../../assets/Dark_Close-btn.svg";
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function ItemModal({
   activeModal,
@@ -8,12 +9,16 @@ export default function ItemModal({
   handleCloseClick,
   onDelete,
 }) {
+  const currentUser = useContext(CurrentUserContext);
+
   const isOpen = activeModal === "preview";
   if (!isOpen || !card) return null;
 
   const handleOverlayClick = (e) => {
     if (e.target.classList.contains("modal")) handleCloseClick();
   };
+
+  const isOwn = Boolean(currentUser?._id) && card.owner === currentUser._id;
 
   return (
     <div className="modal modal_opened" onClick={handleOverlayClick}>
@@ -36,14 +41,15 @@ export default function ItemModal({
           <p className="modal__subtitle">Weather: {card.weather}</p>
         </div>
 
-        {/* REQUIRED: delete button (immediate removal) */}
-        <button
-          type="button"
-          className="modal__delete"
-          onClick={() => onDelete(card)}
-        >
-          Delete Item
-        </button>
+        {isOwn && (
+          <button
+            type="button"
+            className="modal__delete"
+            onClick={() => onDelete(card)}
+          >
+            Delete item
+          </button>
+        )}
       </div>
     </div>
   );
