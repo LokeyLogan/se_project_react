@@ -73,3 +73,9 @@ cd se_project_react
 # Install dependencies
 npm install
 ```
+
+## Backend Repository
+
+This project uses a separate backend repository for authentication, users, and clothing items API.
+
+https://github.com/LokeyLogan/se_project_express
