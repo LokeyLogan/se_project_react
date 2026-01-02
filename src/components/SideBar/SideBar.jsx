@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import "./SideBar.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
@@ -17,16 +17,7 @@ const SideBar = ({ onEditProfile, onSignOut }) => {
           alt="User avatar"
         />
       ) : (
-        <div
-          className="profile__avatar"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: "50%",
-            fontWeight: 700,
-          }}
-        >
+        <div className="profile__avatar profile__avatar-placeholder">
           {firstLetter}
         </div>
       )}

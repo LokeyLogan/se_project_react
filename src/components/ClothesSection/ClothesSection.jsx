@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import "./ClothesSection.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
@@ -6,7 +6,7 @@ const ClothesSection = ({ items = [], onAddClick, onItemClick }) => {
   const currentUser = useContext(CurrentUserContext);
 
   const myItems = currentUser?._id
-    ? items.filter((it) => it.owner === currentUser._id)
+    ? items.filter((item) => item.owner === currentUser._id)
     : [];
 
   return (
@@ -19,22 +19,25 @@ const ClothesSection = ({ items = [], onAddClick, onItemClick }) => {
       </div>
 
       <ul className="profile__list">
-        {myItems.map((it) => (
+        {myItems.map((item) => (
           <li
-            key={it._id}
+            key={item._id}
             className="profile__card"
-            onClick={() => onItemClick && onItemClick(it)}
+            onClick={() => onItemClick(item)}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
-              if ((e.key === "Enter" || e.key === " ") && onItemClick) {
-                onItemClick(it);
+              if (e.key === "Enter" || e.key === " ") {
+                onItemClick(item);
               }
             }}
-            style={{ cursor: "pointer" }}
           >
-            <p className="profile__card-name">{it.name}</p>
-            <img src={it.link} alt={it.name} className="profile__card-image" />
+            <p className="profile__card-name">{item.name}</p>
+            <img
+              src={item.link}
+              alt={item.name}
+              className="profile__card-image"
+            />
           </li>
         ))}
       </ul>
