@@ -6,17 +6,17 @@ export const handle = (res) =>
 const normalize = (item) => ({
   ...item,
   _id: item._id ?? item.id,
-  link: item.link ?? item.imageUrl,
+  link: item.link ?? item.imageUrl, // front-end display only
 });
 
-// GET /items (NO TOKEN)
+// GET /items (no token)
 export function getItems() {
   return fetch(`${baseUrl}/items`)
     .then(handle)
     .then((items) => items.map(normalize));
 }
 
-// POST /items (TOKEN REQUIRED)
+// POST /items (token required) — DO NOT send link
 export function addItem({ name, imageUrl, weather }, token) {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
@@ -24,13 +24,13 @@ export function addItem({ name, imageUrl, weather }, token) {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ name, imageUrl, link: imageUrl, weather }),
+    body: JSON.stringify({ name, imageUrl, weather }),
   })
     .then(handle)
     .then(normalize);
 }
 
-// DELETE /items/:id (TOKEN REQUIRED)
+// DELETE /items/:id (token required)
 export function deleteItem(id, token) {
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
@@ -42,7 +42,7 @@ export function deleteItem(id, token) {
   );
 }
 
-// PATCH /users/me (TOKEN REQUIRED)
+// PATCH /users/me (token required)
 export function updateProfile({ name, avatar }, token) {
   return fetch(`${baseUrl}/users/me`, {
     method: "PATCH",
@@ -54,7 +54,7 @@ export function updateProfile({ name, avatar }, token) {
   }).then(handle);
 }
 
-// PUT /items/:id/likes (TOKEN REQUIRED)
+// PUT /items/:id/likes (token required)
 export function addCardLike(id, token) {
   return fetch(`${baseUrl}/items/${id}/likes`, {
     method: "PUT",
@@ -66,7 +66,7 @@ export function addCardLike(id, token) {
     .then(normalize);
 }
 
-// DELETE /items/:id/likes (TOKEN REQUIRED)
+// DELETE /items/:id/likes (token required)
 export function removeCardLike(id, token) {
   return fetch(`${baseUrl}/items/${id}/likes`, {
     method: "DELETE",

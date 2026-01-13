@@ -12,30 +12,32 @@ function ItemCard({ item, onClick, onCardLike, isLoggedIn }) {
 
   const handleLike = (e) => {
     e.stopPropagation();
-    if (!onCardLike) return;
-    onCardLike({ id: item._id, isLiked });
+    if (!isLoggedIn) return;
+
+    onCardLike({
+      id: item._id,
+      isLiked,
+    });
   };
 
+  const likeButtonClassName = `card__like-button ${
+    isLiked ? "card__like-button_active" : ""
+  } ${!isLoggedIn ? "card__like-button_hidden" : ""}`;
+
   return (
-    <li
-      className="item-card"
-      onClick={() => onClick(item)}
-      style={{ cursor: "pointer" }}
-    >
-      <h2 className="card__name">{item.name}</h2>
+    <li className="item-card" onClick={() => onClick(item)}>
+      <div className="card__info">
+        <h2 className="card__name">{item.name}</h2>
 
-      <img className="card__image" src={item.link} alt={item.name} />
-
-      {isLoggedIn && (
         <button
           type="button"
-          className={`card__like-button ${
-            isLiked ? "card__like-button_active" : ""
-          }`}
+          className={likeButtonClassName}
           onClick={handleLike}
-          aria-label="Like"
+          aria-label="Like item"
         />
-      )}
+      </div>
+
+      <img className="card__image" src={item.link} alt={item.name} />
     </li>
   );
 }

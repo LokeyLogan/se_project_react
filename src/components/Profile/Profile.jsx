@@ -6,16 +6,20 @@ export default function Profile({
   items = [],
   onAddClick,
   onItemClick,
-  onEditProfile,
+  onEditProfileClick,
   onSignOut,
+  onCardLike,
+  isLoggedIn,
 }) {
   return (
     <div className="profile">
-      <SideBar onEditProfile={onEditProfile} onSignOut={onSignOut} />
+      <SideBar onEditProfile={onEditProfileClick} onSignOut={onSignOut} />
       <ClothesSection
         items={items}
         onAddClick={onAddClick}
         onItemClick={onItemClick}
+        onCardLike={onCardLike}
+        isLoggedIn={isLoggedIn}
       />
     </div>
   );
