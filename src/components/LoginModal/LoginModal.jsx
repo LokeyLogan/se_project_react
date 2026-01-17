@@ -1,40 +1,37 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import "./LoginModal.css";
 
-export default function LoginModal({ activeModal, closeActiveModal, onLogin }) {
+export default function LoginModal({
+  closeActiveModal,
+  onLogin,
+  onSwitchToRegister,
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (activeModal !== "login") {
-      setEmail("");
-      setPassword("");
-      setIsSubmitting(false);
-    }
-  }, [activeModal]);
+    setEmail("");
+    setPassword("");
+    setIsSubmitting(false);
+  }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (isSubmitting) return;
 
-    try {
-      setIsSubmitting(true);
-      await onLogin({ email, password });
-      closeActiveModal();
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsSubmitting(false);
-    }
+    setIsSubmitting(true);
+
+    Promise.resolve(onLogin({ email, password }))
+      .catch(console.error)
+      .finally(() => setIsSubmitting(false));
   };
 
   return (
     <ModalWithForm
       title="Log in"
       buttonText={isSubmitting ? "Logging in..." : "Log in"}
-      activeModal={activeModal}
-      modalName="login"
       handleCloseClick={closeActiveModal}
       onSubmit={handleSubmit}
     >
@@ -43,6 +40,7 @@ export default function LoginModal({ activeModal, closeActiveModal, onLogin }) {
         <input
           type="email"
           className="modal__input"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -55,12 +53,23 @@ export default function LoginModal({ activeModal, closeActiveModal, onLogin }) {
         <input
           type="password"
           className="modal__input"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           disabled={isSubmitting}
         />
       </label>
+
+      {/* REQUIRED second button */}
+      <button
+        type="button"
+        className="modal__switch"
+        onClick={onSwitchToRegister}
+        disabled={isSubmitting}
+      >
+        or Sign up
+      </button>
     </ModalWithForm>
   );
 }
