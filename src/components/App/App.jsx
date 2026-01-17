@@ -168,11 +168,11 @@ function AppContent() {
 
     request
       .then((updatedCard) => {
-        setClothingItems((cards) =>
-          cards.map((item) => (item._id === id ? updatedCard : item))
+        setClothingItems((prevItems) =>
+          prevItems.map((item) => (item._id === id ? updatedCard : item))
         );
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.log(err));
   };
 
   // Close modal on Escape
@@ -257,6 +257,8 @@ function AppContent() {
                       onItemClick={handleItemModalClick}
                       onEditProfileClick={handleEditProfileClick}
                       onSignOut={handleSignOut}
+                      onCardLike={handleCardLike}
+                      isLoggedIn={isLoggedIn}
                     />
                   </ProtectedRoute>
                 }

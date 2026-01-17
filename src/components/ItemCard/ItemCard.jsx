@@ -6,12 +6,13 @@ function ItemCard({ item, onClick, onCardLike, isLoggedIn }) {
   const currentUser = useContext(CurrentUserContext);
 
   const isLiked =
-    isLoggedIn && currentUser?._id
-      ? item.likes?.some((id) => id === currentUser._id)
+    currentUser?._id && item.likes
+      ? item.likes.some((id) => id === currentUser._id)
       : false;
 
   const handleLike = (e) => {
     e.stopPropagation();
+
     if (!isLoggedIn) return;
 
     onCardLike({
@@ -22,7 +23,7 @@ function ItemCard({ item, onClick, onCardLike, isLoggedIn }) {
 
   const likeButtonClassName = `card__like-button ${
     isLiked ? "card__like-button_active" : ""
-  } ${!isLoggedIn ? "card__like-button_hidden" : ""}`;
+  }`;
 
   return (
     <li className="item-card" onClick={() => onClick(item)}>

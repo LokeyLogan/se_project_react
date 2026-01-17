@@ -6,12 +6,22 @@
   justify-content: center;
 }
 
-/* Card title (top center) */
-.card__name {
+/* Container for title + heart */
+.card__info {
   position: absolute;
-  top: 4px;
+  top: 15px;
   left: 50%;
   transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  gap: 10px; /* ✅ 10px space between title and heart */
+
+  z-index: 3;
+}
+
+/* Card title */
+.card__name {
   margin: 0;
 
   font-family: "Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -25,39 +35,9 @@
   padding: 4px 8px;
   border-radius: 4px;
   text-align: center;
-  z-index: 1;
 }
 
-/* Image */
-.card__image {
-  width: 100%;
-  border-radius: 16px;
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-/* Container for title + heart */
-.card__info {
-  position: absolute;
-  top: 4px;
-  left: 0;
-  right: 0;
-  padding: 0 12px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  pointer-events: none;
-}
-
-/* Allow interaction */
-.card__info .card__name,
-.card__like-button {
-  pointer-events: auto;
-}
-
-/* Heart (like button) */
+/* Heart button */
 .card__like-button {
   width: 18px;
   height: 15px;
@@ -69,14 +49,16 @@
   background-position: center;
   background-size: contain;
   background-image: url("../../assets/heart.svg");
-
-  margin-left: auto; /* pushes it to the right */
 }
 
 .card__like-button_active {
   background-image: url("../../assets/heart-active.svg");
 }
 
-.card__like-button_hidden {
-  display: none;
+/* Image */
+.card__image {
+  width: 100%;
+  border-radius: 16px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
