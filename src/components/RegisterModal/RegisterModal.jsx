@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import "./RegisterModal.css";
+import { useState, useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 export default function RegisterModal({
-  activeModal,
   closeActiveModal,
   onRegister,
+  onSwitchToLogin,
 }) {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -13,36 +14,28 @@ export default function RegisterModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (activeModal !== "register") {
-      setName("");
-      setAvatar("");
-      setEmail("");
-      setPassword("");
-      setIsSubmitting(false);
-    }
-  }, [activeModal]);
+    setName("");
+    setAvatar("");
+    setEmail("");
+    setPassword("");
+    setIsSubmitting(false);
+  }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (isSubmitting) return;
 
-    try {
-      setIsSubmitting(true);
-      await onRegister({ name, avatar, email, password });
-      closeActiveModal();
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsSubmitting(false);
-    }
+    setIsSubmitting(true);
+
+    Promise.resolve(onRegister({ name, avatar, email, password }))
+      .catch(console.error)
+      .finally(() => setIsSubmitting(false));
   };
 
   return (
     <ModalWithForm
       title="Sign up"
       buttonText={isSubmitting ? "Signing up..." : "Sign up"}
-      activeModal={activeModal}
-      modalName="register"
       handleCloseClick={closeActiveModal}
       onSubmit={handleSubmit}
     >
@@ -51,8 +44,11 @@ export default function RegisterModal({
         <input
           type="text"
           className="modal__input"
+          placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          minLength="2"
+          maxLength="30"
           required
           disabled={isSubmitting}
         />
@@ -63,9 +59,10 @@ export default function RegisterModal({
         <input
           type="url"
           className="modal__input"
+          placeholder="Avatar URL"
           value={avatar}
           onChange={(e) => setAvatar(e.target.value)}
-          placeholder="https://..."
+          required
           disabled={isSubmitting}
         />
       </label>
@@ -75,6 +72,7 @@ export default function RegisterModal({
         <input
           type="email"
           className="modal__input"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -87,12 +85,23 @@ export default function RegisterModal({
         <input
           type="password"
           className="modal__input"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           disabled={isSubmitting}
         />
       </label>
+
+      {/* REQUIRED second button */}
+      <button
+        type="button"
+        className="modal__switch"
+        onClick={onSwitchToLogin}
+        disabled={isSubmitting}
+      >
+        or Log in
+      </button>
     </ModalWithForm>
   );
 }
