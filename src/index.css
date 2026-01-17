@@ -1,1 +1,4 @@
 @import url(./vendor/normalize.css);
+
+@import "./components/LoginModal/LoginModal.css";
+@import "./components/RegisterModal/RegisterModal.css";
