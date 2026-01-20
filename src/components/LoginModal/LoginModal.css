@@ -1,11 +1,15 @@
 .modal__switch {
+  font-family:
+    "Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-top: 12px;
+  line-height: 20px;
   border: none;
   background: transparent;
   cursor: pointer;
   padding: 0;
-  font-size: 14px;
-  opacity: 0.7;
+  font-size: 16px;
+  opacity: 0.5;
+  margin-top: 5px;
 }
 
 .modal__switch:hover {

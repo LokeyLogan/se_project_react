@@ -1,13 +1,21 @@
-import { useContext } from "react";
 import "./ClothesSection.css";
+import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import ItemCard from "../ItemCard/ItemCard";
 
-const ClothesSection = ({ items = [], onAddClick, onItemClick }) => {
+const ClothesSection = ({
+  items = [],
+  onAddClick,
+  onItemClick,
+  onCardLike,
+  isLoggedIn,
+}) => {
   const currentUser = useContext(CurrentUserContext);
 
-  const myItems = currentUser?._id
-    ? items.filter((item) => item.owner === currentUser._id)
-    : [];
+  const myItems =
+    currentUser?._id && Array.isArray(items)
+      ? items.filter((item) => item.owner === currentUser._id)
+      : [];
 
   return (
     <section className="profile__clothes">
@@ -18,27 +26,16 @@ const ClothesSection = ({ items = [], onAddClick, onItemClick }) => {
         </button>
       </div>
 
-      <ul className="profile__list">
+      {/* Reuse ItemCard so Profile matches Home */}
+      <ul className="cards__list">
         {myItems.map((item) => (
-          <li
+          <ItemCard
             key={item._id}
-            className="profile__card"
-            onClick={() => onItemClick(item)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                onItemClick(item);
-              }
-            }}
-          >
-            <p className="profile__card-name">{item.name}</p>
-            <img
-              src={item.link}
-              alt={item.name}
-              className="profile__card-image"
-            />
-          </li>
+            item={item}
+            onClick={onItemClick}
+            onCardLike={onCardLike}
+            isLoggedIn={isLoggedIn}
+          />
         ))}
       </ul>
     </section>

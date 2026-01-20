@@ -34,6 +34,7 @@ export default function LoginModal({
       buttonText={isSubmitting ? "Logging in..." : "Log in"}
       handleCloseClick={closeActiveModal}
       onSubmit={handleSubmit}
+      contentClassName="modal__content_type_login"
     >
       <label className="modal__label">
         Email

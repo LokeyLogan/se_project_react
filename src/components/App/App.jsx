@@ -142,18 +142,18 @@ function AppContent() {
     if (!token) return;
 
     const id = item._id ?? item.id;
+
     deleteItem(id, token)
       .then(() =>
         setClothingItems((prev) =>
           prev.filter(
-            (clothingItem) => (clothingItem._id ?? clothingItem.id) !== id
-          )
-        )
+            (clothingItem) => (clothingItem._id ?? clothingItem.id) !== id,
+          ),
+        ),
       )
       .then(closeActiveModal)
       .catch((err) => {
         console.error(err);
-        closeActiveModal();
       });
   };
 
@@ -169,7 +169,7 @@ function AppContent() {
     request
       .then((updatedCard) => {
         setClothingItems((prevItems) =>
-          prevItems.map((item) => (item._id === id ? updatedCard : item))
+          prevItems.map((item) => (item._id === id ? updatedCard : item)),
         );
       })
       .catch((err) => console.log(err));

@@ -6,39 +6,32 @@ function ModalWithForm({
   children,
   buttonText,
   title,
-  activeModal,
-  modalName,
   handleCloseClick,
   onSubmit,
+  contentClassName,
 }) {
-  const isOpen = activeModal === modalName;
-
   useEffect(() => {
     const handleEsc = (e) => {
-      if (e.key === "Escape") {
-        handleCloseClick();
-      }
+      if (e.key === "Escape") handleCloseClick();
     };
 
-    if (isOpen) {
-      document.addEventListener("keydown", handleEsc);
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleEsc);
-    };
-  }, [isOpen, handleCloseClick]);
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [handleCloseClick]);
 
   const handleOverlayClick = (e) => {
-    if (e.target.classList.contains("modal")) {
-      handleCloseClick();
-    }
+    if (e.target.classList.contains("modal")) handleCloseClick();
   };
 
-  return isOpen ? (
+  return (
     <div className="modal modal_opened" onClick={handleOverlayClick}>
-      <div className="modal__content modal__content_type_form">
+      <div
+        className={`modal__content modal__content_type_form ${
+          contentClassName || ""
+        }`}
+      >
         <h2 className="modal__title">{title}</h2>
+
         <button
           onClick={handleCloseClick}
           type="button"
@@ -50,18 +43,20 @@ function ModalWithForm({
             className="modal__close-icon"
           />
         </button>
+
         <form
           onSubmit={onSubmit}
           className="modal__form modal__form_type_layout"
         >
           {children}
+
           <button type="submit" className="modal__submit">
             {buttonText}
           </button>
         </form>
       </div>
     </div>
-  ) : null;
+  );
 }
 
 export default ModalWithForm;
