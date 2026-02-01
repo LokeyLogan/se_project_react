@@ -8,7 +8,7 @@ function ModalWithForm({
   title,
   handleCloseClick,
   onSubmit,
-  contentClassName,
+  contentClassName = "",
 }) {
   useEffect(() => {
     const handleEsc = (e) => {
@@ -26,9 +26,7 @@ function ModalWithForm({
   return (
     <div className="modal modal_opened" onClick={handleOverlayClick}>
       <div
-        className={`modal__content modal__content_type_form ${
-          contentClassName || ""
-        }`}
+        className={`modal__content modal__content_type_form ${contentClassName}`}
       >
         <h2 className="modal__title">{title}</h2>
 

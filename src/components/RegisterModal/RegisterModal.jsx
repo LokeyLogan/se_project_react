@@ -38,6 +38,7 @@ export default function RegisterModal({
       buttonText={isSubmitting ? "Signing up..." : "Sign up"}
       handleCloseClick={closeActiveModal}
       onSubmit={handleSubmit}
+      contentClassName="modal_type_register"
     >
       <label className="modal__label">
         Name
@@ -93,7 +94,6 @@ export default function RegisterModal({
         />
       </label>
 
-      {/* REQUIRED second button */}
       <button
         type="button"
         className="modal__switch"

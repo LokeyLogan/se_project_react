@@ -13,3 +13,7 @@
 .modal__switch:hover {
   opacity: 1;
 }
+
+.modal_type_register .modal__submit {
+  margin-top: -40px;
+}

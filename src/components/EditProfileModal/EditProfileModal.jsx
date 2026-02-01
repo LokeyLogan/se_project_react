@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import "./EditProfileModal.css";
 
 export default function EditProfileModal({
   activeModal,
   closeActiveModal,
-  onUpdateProfile,
+  onSubmit, // ✅ matches App.jsx: onSubmit={handleEditProfileSubmit}
 }) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -14,26 +15,22 @@ export default function EditProfileModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (activeModal === "edit-profile" && currentUser) {
-      setName(currentUser.name || "");
-      setAvatar(currentUser.avatar || "");
+    if (activeModal === "edit-profile") {
+      setName(currentUser?.name || "");
+      setAvatar(currentUser?.avatar || "");
       setIsSubmitting(false);
     }
   }, [activeModal, currentUser]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (isSubmitting) return;
 
-    try {
-      setIsSubmitting(true);
-      await onUpdateProfile({ name, avatar });
-      closeActiveModal();
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsSubmitting(false);
-    }
+    setIsSubmitting(true);
+
+    Promise.resolve(onSubmit({ name, avatar }))
+      .catch(console.error)
+      .finally(() => setIsSubmitting(false));
   };
 
   return (
@@ -50,9 +47,12 @@ export default function EditProfileModal({
         <input
           type="text"
           className="modal__input"
+          name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          minLength="2"
+          maxLength="30"
           disabled={isSubmitting}
         />
       </label>
@@ -62,6 +62,7 @@ export default function EditProfileModal({
         <input
           type="url"
           className="modal__input"
+          name="avatar"
           value={avatar}
           onChange={(e) => setAvatar(e.target.value)}
           placeholder="https://..."

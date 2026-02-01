@@ -20,7 +20,7 @@ const ClothesSection = ({
   return (
     <section className="profile__clothes">
       <div className="profile__clothes-header">
-        <h2>My Items</h2>
+        <h2>Your items</h2>
         <button type="button" className="profile__add-btn" onClick={onAddClick}>
           + Add Item
         </button>
